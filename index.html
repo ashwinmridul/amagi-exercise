@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>AmagiTube</title>
+
+		<!-- Include Bootstrap CSS -->
+		<link rel="stylesheet" type="text/css" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+
+		<!-- Include Font Awesome -->
+		<link rel="stylesheet" type="text/css" href="lib/font-awesome-4.5.0/css/font-awesome.min.css">
+
+		<!-- Include jQuery UI CSS -->
+		<link rel="stylesheet" type="text/css" href="lib/jquery-ui/jquery-ui.min.css">
+
+		<!-- Include custom CSS -->
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	</head>
+	<body ng-app="amagi" ng-controller="AmagiCtrl as amagictrl">
+		<nav class="navbar navbar-inverse navbar-fixed-top am-navbar">
+			<div class="container-fluid am-nav-container">
+				<div class="row-fluid">
+					<div class="col-sm-2 am-left-heading-div">
+						<span class="am-heading am-left-heading">amagi</span>
+					</div>
+					<div class="col-sm-8 ui-widget am-search-div">
+						<i class="fa fa-search am-search-icon"></i>
+						<input id="searchText" name="searchText" type="text" class="form-control" placeholder="Search (by date, client, channel, city, campaign, brand name)" ng-model="amagictrl.searchText" am-enter="amagictrl.getSpots($element.target); amagictrl.saveSearch()" ng-keyup="amagictrl.autoSuggest()">
+					</div>
+					<div class="col-sm-2 am-right-heading-div">
+						<span class="am-heading am-right-heading">AmagiTube</span>
+					</div>
+				</div>
+				
+			</div>
+		</nav>
+		<div class="am-loader-div" ng-if="amagictrl.spotsLoading">
+			<span class="am-loader fa fa-spinner fa-spin"></span>
+		</div>
+
+		<div class="am-reloader-div" ng-class="{'am-visibilty-hidden': amagictrl.spotsLoading}">
+			<button class="am-reload-button button" ng-click="amagictrl.searchText = ''; amagictrl.getSpots()">
+				<span class="am-reloader fa fa-refresh"></span>
+			</button>
+		</div>
+
+		<div class="alert am-no-results-alert" ng-if="!amagictrl.spotsLoading && !amagictrl.spotsDistributed">
+			<strong>Sorry!</strong> No results found
+		</div>
+
+		<div class="container-fluid am-spots-container" ng-repeat="(date, spots) in amagictrl.spotsDistributed" ng-hide="!amagictrl.spotsLoading && !amagictrl.spotsDistributed" ng-class="{'am-content-loading': amagictrl.spotsLoading}">
+			<div class="row-fluid">
+				<div class="col-sm-12 am-spots-collection-header" ng-click="spots.collapsed = !spots.collapsed">
+					<span class="pull-left">{{date}}</span>
+					<span class="pull-right fa am-expand-collapse-icon" ng-class="{'fa-caret-square-o-down': spots.collapsed, 'fa-caret-square-o-up': !spots.collapsed}"></span>
+				</div>
+			</div>
+			<div class="row-fluid" ng-hide="spots.collapsed">
+				<div class="col-sm-12 am-spots-details">
+					<div class="row-fluid">
+						<div class="col-sm-12 am-spots-counts">
+							{{spots.values.length}} Spot{{(spots.values.length > 1) ? 's':''}}, {{spots.clients.length}} Client{{(spots.clients.length > 1) ? 's':''}}, {{spots.channels.length}} Channel{{(spots.channels.length > 1) ? 's':''}}, {{spots.cities.length}} Cit{{(spots.cities.length > 1) ? 'ies':'y'}}, {{spots.campaigns.length}} Campaign{{(spots.campaigns.length > 1) ? 's':''}}, {{spots.brands.length}} Brand{{(spots.brands.length > 1) ? 's':''}}
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="col-sm-6 am-spot-div" ng-repeat="spot in spots.values">
+							<div class="spot-container">
+								<table>
+									<tbody>
+										<tr>
+											<td>
+												<span class="am-thumbnail-container" ng-click="amagictrl.openVideo(spot)">
+													<i class="fa fa-play-circle-o am-play-icon"></i>
+													<img class="am-spot-thumbnail" src="{{spot.thumbnail_path}}">
+												</span>
+											</td>
+											<td class="am-spot-text-content">
+												<div>
+													<span class="am-spot-time">{{spot.local_time}}, {{spot.brand_name}}</span><br>
+													<i class="fa fa-bookmark am-spot-icon"></i><span>{{spot.client_name}}</span><br>
+													<i class="fa fa-certificate am-spot-icon"></i><span>{{spot.campaign_name}}</span><br>
+													<i class="fa fa-film am-spot-icon"></i><span>{{spot.channel_name}}</span><br>
+													<i class="fa fa-map-pin am-spot-icon"></i><span>{{spot.city_name}}</span><br>
+													<i class="fa fa-clock-o am-spot-icon"></i><span>{{spot.duration}}</span>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Template for video modal window -->
+		<script type="text/ng-template" id="custom/videoModal">
+			<div>
+				<div class="modal-body am-video-modal" ng-controller="VideoCtrl as videoctrl">
+					<video autoplay="autoplay" controls class="am-video" src="{{videoctrl.displaySpot.video_path}}" poster="{{videoctrl.displaySpot.thumbnail_path}}"></video>
+				</div>
+			</div>
+		</script>
+
+		<!-- Include angularJS files -->
+		<script type="text/javascript" src="lib/angular-1.4/angular.min.js"></script>
+
+		<!-- Include jQuery -->
+		<script type="text/javascript" src="lib/jquery/jquery-1.12.0.min.js"></script>
+		<script type="text/javascript" src="lib/jquery-ui/jquery-ui.min.js"></script>
+
+		<!-- Include UI Bootstrap -->
+		<script type="text/javascript" src="lib/bootstrap-3.3.5-dist/js/ui-bootstrap-tpls-1.0.3.min.js"></script>
+
+		<!-- Include ngStorage -->
+		<script type="text/javascript" src="lib/ngStorage/ngStorage.min.js"></script>
+		
+		<!-- Include application level files -->
+		<script type="text/javascript" src="javascripts/app.js"></script>
+		<script type="text/javascript" src="javascripts/constants.js"></script>
+		<script type="text/javascript" src="javascripts/controllers.js"></script>
+		<script type="text/javascript" src="javascripts/services.js"></script>
+		<script type="text/javascript" src="javascripts/filters.js"></script>
+		<script type="text/javascript" src="javascripts/directives.js"></script>
+	</body>
+</html>

@@ -1,0 +1,153 @@
+body {
+	overflow-y: scroll;
+}
+.am-navbar {
+	padding-top: 7px;
+	border-radius: 0;
+}
+.am-heading {
+	color: #fff;
+}
+.am-left-heading {
+	font-family: HelveticaNeueLTStd-Bd, Arial;
+	font-size: 28px;
+}
+.am-right-heading-div {
+	text-align: right;
+}
+.am-right-heading {
+	font-family: Arial;
+	font-size: 23px;
+}
+.am-search-div {
+	padding: 0;
+}
+.am-search-icon {
+	color: #bbb;
+}
+.am-search-div i {
+	position: absolute;
+	right: 4px;
+	padding: 9px 6px;
+}
+.am-loader-div {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+}
+.am-loader {
+	font-size: 38px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+}
+.am-reloader-div {
+	text-align: center;
+	margin-top: 65px;
+	margin-bottom: 10px;
+}
+.am-reload-button {
+	border-radius: 10px;
+}
+.am-reloader {
+	border: 1px solid #ddd;
+	font-size: 23px;
+	padding: 4px;
+}
+.am-content-loading {
+	opacity: 0.5;
+	pointer-events: none;
+}
+.am-visibilty-hidden {
+	visibility: hidden;
+}
+.am-no-results-alert {
+	text-align: center;
+}
+.am-spots-container {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.am-spots-collection-header {
+	border: 1px solid #bbb;
+	font-weight: bold;
+	font-size: 16px;
+}
+.am-spots-collection-header:hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+.am-expand-collapse-icon {
+	padding-top: 3px;
+}
+.am-spots-details {
+	border: 1px solid #bbb;
+}
+.am-spots-counts {
+	padding: 0;
+	font-weight: bold;
+	font-size: 12px;
+}
+.am-spot-div {
+	padding: 0;
+}
+.spot-container {
+    padding: 5px;
+    border: 1px solid #bbb;
+    margin: 5px;
+}
+.am-spot-thumbnail {
+	width: 142px;
+}
+.am-spot-text-content {
+	padding-left: 5px;
+	vertical-align: top;
+	font-size: 12px;
+	font-weight: bold;
+}
+.am-spot-time {
+	font-size: 14px;
+}
+.am-spot-icon {
+	padding-right: 3px;
+}
+.am-thumbnail-container:hover {
+	cursor: pointer;
+}
+.am-thumbnail-container:hover .am-play-icon {
+	color: white;
+}
+.am-play-icon {
+	position: absolute;
+    left: 72px;
+    top: 42%;
+    font-size: 21px;
+}
+.am-video {
+	width: 100%;
+}
+.am-video-modal {
+	background-color: #444;
+}
+@media (max-width: 767px) {
+	.am-right-heading {
+		display: none;
+	}
+	.am-spots-collection-header {
+		height: 24px;
+	}
+	.am-reloader-div {
+		margin-top: 100px;
+	}
+	.am-left-heading-div {
+		text-align: center;
+	}
+	.am-nav-container {
+		padding: 0;
+	}
+}
+@media (min-width: 768px) {
+	.am-left-heading-small {
+		display: none;
+	}
+}
